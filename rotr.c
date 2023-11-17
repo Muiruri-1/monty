@@ -1,30 +1,26 @@
-/* Filename: rotr.c */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "monty.h"
-
 /**
- * rotr - Rotates the stack to the bottom.
- * @stack: Pointer to the top of the stack.
- * @line_number: Line number in the Monty file.
+  *f_rotr- rotates the stack to the bottom
+  *@head: stack head
+  *@counter: line_number
+  *Return: no return
  */
-void rotr(stack_t **stack, unsigned int line_number)
+void f_rotr(stack_t **head, __attribute__((unused)) unsigned int counter)
 {
-	(void)line_number; /* Avoid unused parameter warning */
+	stack_t *copy;
 
-	if (stack && *stack && (*stack)->next)
+	copy = *head;
+	if (*head == NULL || (*head)->next == NULL)
 	{
-		stack_t *last = *stack;
-
-		while (last->next)
-			last = last->next;
-		last->prev->next = NULL;
-		last->next = *stack;
-		(*stack)->prev = last;
-		last->prev = NULL;
-		*stack = last;
+		return;
 	}
+	while (copy->next)
+	{
+		copy = copy->next;
+	}
+	copy->next = *head;
+	copy->prev->next = NULL;
+	copy->prev = NULL;
+	(*head)->prev = copy;
+	(*head) = copy;
 }
-
